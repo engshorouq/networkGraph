@@ -45,7 +45,7 @@ export default class index extends Component {
     if (add) {
       let simulation = d3
         .forceSimulation(nodes)
-        .force("charge", d3.forceManyBody().strength(-20))
+        .force("charge", d3.forceManyBody().strength(-100))
         .force("center", d3.forceCenter(width / 2, height / 2))
         .force("link", d3.forceLink().links(links))
         .on("tick", this.tiked);
@@ -63,8 +63,7 @@ export default class index extends Component {
       .selectAll("line")
       .data(links);
 
-    const links2 = u
-      .enter()
+    u.enter()
       .append("line")
       .merge(u)
       .attr("x1", d => d.source.x)
@@ -89,27 +88,25 @@ export default class index extends Component {
       .attr("fill-opacity", 0.5)
       .attr("stroke", "white")
       .attr("stroke-width", 2);
-    //   .call(d3.drag().on("drag", dragged));
-    // function dragged(d) {
-    //   d.x = d3.event.x;
-    //   d.y = d3.event.y;
-    //   d3.select(this)
-    //     .attr("cx", d.x)
-    //     .attr("cy", d.y);
-    //   links2
-    //     .filter(function(l) {
-    //       return l.source === d;
-    //     })
-    //     .attr("x1", d.x)
-    //     .attr("y1", d.y);
-    //   links2
-    //     .filter(function(l) {
-    //       return l.target === d;
-    //     })
-    //     .attr("x2", d.x)
-    //     .attr("y2", d.y);
-    // }
 
+    u.exit().remove();
+
+    u = d3
+      .select(".nodes")
+      .selectAll("text")
+      .data(nodes);
+    u.enter()
+      .append("text")
+      .merge(u)
+      .attr("x", d => d.x)
+      .attr("y", d => d.y)
+      .attr("font-size", "12")
+      .attr("text-anchor", "middle")
+      .attr("dominant-baseline", "central")
+      .text(d => d.name[0])
+      .attr("fill", "white")
+      .append("title")
+      .text(d => d.name);
     u.exit().remove();
   };
 
