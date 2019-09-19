@@ -83,7 +83,7 @@ export default class index extends Component {
       .merge(u)
       .attr("cx", d => d.x)
       .attr("cy", d => d.y)
-      .attr("r", 7)
+      .attr("r", 10)
       .attr("fill", d => d.color)
       .attr("fill-opacity", 0.5)
       .attr("stroke", "white")
